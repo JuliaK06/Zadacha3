@@ -12,13 +12,13 @@ import java.util.concurrent.PriorityBlockingQueue;
 public class Main {
     public static void main(String[] args) {
         PriorityBlockingQueue<Clothes> list = new PriorityBlockingQueue<>();
-        Path resourceDirectory = Paths.get("src","resources");
+        Path resourceDirectory = Paths.get("src", "resources");
         String absolutePath = resourceDirectory.toFile().getAbsolutePath();
 
         Thread t1 = new Thread(() -> {
-
+            Scanner sc = null;
             try {
-                Scanner sc=new Scanner(new File(absolutePath+ "/guess.txt"));
+                sc = new Scanner(new File(absolutePath + "/guess.txt"));
                 while (sc.hasNext()) {
                     String name = sc.next();
                     String type = sc.next();
@@ -30,8 +30,9 @@ public class Main {
                 sc.close();
             } catch (FileNotFoundException e) {
                 System.out.println(e.getMessage());
+            } finally {
+                sc.close();
             }
-
         });
         Thread t2 = new Thread(() -> {
             File f = new File(absolutePath + "/calvin_klein.txt");
@@ -44,33 +45,34 @@ public class Main {
                     double price = sc.nextDouble();
                     Clothes c1 = new Clothes(name, type, price);
                     list.put(c1);
-                }  sc.close();
+                }
+                sc.close();
             } catch (FileNotFoundException e) {
                 System.out.println(e.getMessage());
             }
 
         });
-
         Thread t3 = new Thread(() -> {
-            File f = new File(absolutePath+ "/trussardi.txt");
-
+            File f = new File(absolutePath + "/trussardi.txt");
+            Scanner sc = null;
             try {
-             Scanner   sc = new Scanner(f);
+                sc = new Scanner(f);
                 while (sc.hasNext()) {
                     String name = sc.next();
                     String type = sc.next();
                     double price = sc.nextDouble();
                     Clothes c1 = new Clothes(name, type, price);
                     list.put(c1);
-                }sc.close();
+                }
+                sc.close();
             } catch (FileNotFoundException e) {
                 System.out.println(e.getMessage());
             }
 
         });
-t1.start();
-t2.start();
-t3.start();
+        t1.start();
+        t2.start();
+        t3.start();
         try {
             t1.join();
             t2.join();
@@ -80,15 +82,15 @@ t3.start();
         }
 
 
-        File f2=new File(absolutePath +"/output.txt");
-        try{
-        PrintWriter output=new PrintWriter(f2);
-        for(int i=0;i<10;i++){
+        File f2 = new File(absolutePath + "/output.txt");
+        try {
+            PrintWriter output = new PrintWriter(f2);
+            for (int i = 0; i < 10; i++) {
 
-            output.println(list.poll().toString());
-        }
-        output.close();
-        }catch(FileNotFoundException e){
+                output.println(list.poll().toString());
+            }
+            output.close();
+        } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
     }
