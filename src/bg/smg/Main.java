@@ -17,8 +17,8 @@ public class Main {
 
         Thread t1 = new Thread(() -> {
 
-            try(Scanner sc=new Scanner(new File(absolutePath+ "/guess.txt"))) {
-
+            try {
+                Scanner sc=new Scanner(new File(absolutePath+ "/guess.txt"));
                 while (sc.hasNext()) {
                     String name = sc.next();
                     String type = sc.next();

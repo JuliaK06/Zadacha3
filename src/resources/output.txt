@@ -7,4 +7,4 @@ guess_блуза  тениска 54.3
 calvin_klein_червена_блуза  тениска 54.8
 guess_logo_блуза  тениска 57.7
 guess_diamonds_блуза  тениска 62.9
-guess_triangle_tee_дамска_блуза  тениска 64.2
+calvin_klein_kiara_дамска_блуза  тениска 64.2
